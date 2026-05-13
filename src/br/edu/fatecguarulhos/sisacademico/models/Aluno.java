@@ -14,6 +14,8 @@ public class Aluno {
 	
 	//Construtor
 	
+	public Aluno() {}
+	
 	public Aluno(int rgm, String nome, String email, String cpf, String endereco, String municipio, String uf,
 			String celular) {
 		super();
