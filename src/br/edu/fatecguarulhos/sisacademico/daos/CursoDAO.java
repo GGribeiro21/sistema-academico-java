@@ -40,9 +40,9 @@ public class CursoDAO {
 			} else {
 				curso = null;
 			}
-
+			
 			connection.close();
-
+			if(curso == null) throw new Exception("Curso não encontrado");
 			return curso;
 
 		} catch (SQLException e) {
