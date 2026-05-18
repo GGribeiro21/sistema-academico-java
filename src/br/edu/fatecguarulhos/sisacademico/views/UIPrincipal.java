@@ -107,7 +107,7 @@ public class UIPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-		});
+		}});
 		mnArquivo.add(mntmSalvar);
 		
 		JMenuItem mntmConsultar = new JMenuItem("Consultar");
@@ -588,4 +588,4 @@ public class UIPrincipal extends JFrame {
 		panelBoletim.add(lblCurso);
 
 	}
-}
+	}
