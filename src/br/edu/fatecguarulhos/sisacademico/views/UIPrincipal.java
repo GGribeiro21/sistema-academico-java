@@ -7,12 +7,20 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
+import br.edu.fatecguarulhos.sisacademico.daos.AlunoDAO;
+import br.edu.fatecguarulhos.sisacademico.daos.CursoDAO;
+import br.edu.fatecguarulhos.sisacademico.daos.DisciplinaDAO;
+import br.edu.fatecguarulhos.sisacademico.models.Aluno;
+import br.edu.fatecguarulhos.sisacademico.models.Disciplina;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
 import java.awt.event.InputEvent;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
@@ -24,7 +32,7 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Choice;
-
+import java.awt.Component;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
@@ -66,6 +74,9 @@ public class UIPrincipal extends JFrame {
 	private JTextField txtNome2;
 	private JTextField txtNota;
 
+	
+	private JTabbedPane tabbedPane ;
+	private JFormattedTextField txtData;
 	/**
 	 * Launch the application.
 	 */
@@ -98,6 +109,12 @@ public class UIPrincipal extends JFrame {
 		
 		JMenuItem mntmSalvar = new JMenuItem("Salvar");
 		mntmSalvar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK | InputEvent.ALT_DOWN_MASK));
+		mntmSalvar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+		}});
 		mnArquivo.add(mntmSalvar);
 		
 		JMenuItem mntmConsultar = new JMenuItem("Consultar");
@@ -148,7 +165,7 @@ public class UIPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(20, 21, 759, 395);
 		contentPane.add(tabbedPane);
 		
@@ -177,7 +194,7 @@ public class UIPrincipal extends JFrame {
 		lblCpf.setBounds(370, 80, 60, 40);
 		panelDadosP.add(lblCpf);
 		
-		JFormattedTextField txtData = new JFormattedTextField(new MaskFormatter(" ##/##/####"));
+		txtData = new JFormattedTextField(new MaskFormatter(" ##/##/####"));
 		txtData.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtData.setBounds(240, 80, 98, 40);
 		panelDadosP.add(txtData);
@@ -310,7 +327,52 @@ public class UIPrincipal extends JFrame {
 		panelDadosC.add(btnNovo2);
 		btnNovo2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
 		
-		JComboBox comboBoxCampus = new JComboBox();
+		String[] campus = {
+	            "Adamantina","Americana",
+	            "Araçatuba","Araraquara",
+	            "Araras","Assis",
+	            "Atibaia","Barretos",
+	            "Barueri","Bauru",
+	            "Bebedouro","Botucatu",
+	            "Bragança Paulista","Campinas",
+	            "Capão Bonito","Carapicuíba",
+	            "Catanduva","Cotia",
+	            "Cruzeiro","Diadema",
+	            "Ferraz de Vasconcelos","Franca",
+	            "Franco da Rocha","Garça",
+	            "Guaratinguetá","Guarulhos",
+	            "Ilha Solteira","Indaiatuba",
+	            "Itapetininga","Itapevi",
+	            "Itapira","Iaquaquecetuba",
+	            "Itatiba","Itu",
+	            "Jaboticabal","Jacareí",
+	            "Jales","Jaú",
+	            "Jundiaí","Lins",
+	            "Marília","Matão",
+	            "Mauá","Mococa",
+	            "Mogi das Cruzes","Mogi Mirim",
+	            "Olímpia","Osasco",
+	            "Ourinhos","Pindamonhangaba",
+	            "Piracicaba","Pompéia",
+	            "Porto Ferreira","Praia Grande",
+	            "Presidente Prudente","Registro",
+	            "Ribeirão Preto","Rio Claro",
+	            "Santana de Parnaíba","Santo André",
+	            "Santos (Baixada Santista)","Santos (Rubens Lara)",
+	            "São Bernardo do Campo","São Caetano do Sul",
+	            "São Carlos","São José do Rio Preto",
+	            "São José dos Campos","São Paulo (Bom Retiro / São Paulo)",
+	            "São Paulo (Ipiranga)","São Paulo (Itaquera)",
+	            "São Paulo (Sebrae)","São Paulo (Tatuapé)",
+	            "São Paulo (Zona Leste)","São Paulo (Zona Sul)",
+	            "São Roque","São Sebastião",
+	            "Sertãozinho","Sorocaba",
+	            "Sumaré","Suzano",
+	            "Taquaritinga","Tatuí",
+	            "Taubaté","Votorantim"
+	        };
+		
+		JComboBox comboBoxCampus = new JComboBox(campus);
 		comboBoxCampus.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		comboBoxCampus.setBounds(114, 80, 526, 40);
 		panelDadosC.add(comboBoxCampus);
@@ -343,112 +405,132 @@ public class UIPrincipal extends JFrame {
 		tabbedPane.addTab("Notas e Faltas", null, panelNotaseFalta, null);
 		panelNotaseFalta.setLayout(null);
 		
-				JLabel lblRGM = new JLabel("RGM:");
-				lblRGM.setFont(new Font("Tahoma", Font.PLAIN, 23));
-				lblRGM.setBounds(10, 15, 60, 40);
-				panelNotaseFalta.add(lblRGM);
+		JLabel lblRGM = new JLabel("RGM:");
+		lblRGM.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblRGM.setBounds(10, 15, 60, 40);
+		panelNotaseFalta.add(lblRGM);
 				
-						txtRgm2 = new JTextField();
-						txtRgm2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-						txtRgm2.setBounds(69, 15, 195, 40);
-						panelNotaseFalta.add(txtRgm2);
+		txtRgm2 = new JTextField();
+		txtRgm2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtRgm2.setBounds(69, 15, 195, 40);
+		panelNotaseFalta.add(txtRgm2);
 						
-								JLabel lblDisciplina = new JLabel("Disciplina:");
-								lblDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
-								lblDisciplina.setBounds(12, 146, 121, 40);
-								panelNotaseFalta.add(lblDisciplina);
+		JLabel lblDisciplina = new JLabel("Disciplina:");
+		lblDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblDisciplina.setBounds(12, 146, 121, 40);
+		panelNotaseFalta.add(lblDisciplina);
 								
-										JComboBox comboDisciplina = new JComboBox();
-										comboDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		JComboBox comboDisciplina = new JComboBox();
+		comboDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
 										
-												comboDisciplina.setModel(
-														new DefaultComboBoxModel(
-																new String[] {
-																		"Programação Orientada a Objetos",
-																		"Banco de Dados",
-																		"Engenharia de Software"
-																}));
+		comboDisciplina.setModel(
+					new DefaultComboBoxModel(
+							new String[] {
+									"Programação Orientada a Objetos",
+									"Banco de Dados",
+									"Engenharia de Software"
+							}));
 												
-														comboDisciplina.setBounds(128, 146, 490, 40);
-														panelNotaseFalta.add(comboDisciplina);
+		comboDisciplina.setBounds(128, 146, 490, 40);
+		panelNotaseFalta.add(comboDisciplina);
 														
 														
-																JLabel lblSemestre = new JLabel("Semestre:");
-																lblSemestre.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																lblSemestre.setBounds(10, 215, 110, 40);
-																panelNotaseFalta.add(lblSemestre);
+		JLabel lblSemestre = new JLabel("Semestre:");
+		lblSemestre.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblSemestre.setBounds(10, 215, 110, 40);
+		panelNotaseFalta.add(lblSemestre);
 																
-																		JComboBox comboSemestre_1 = new JComboBox();
-																		comboSemestre_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		JComboBox comboSemestre_1 = new JComboBox();
+		comboSemestre_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
 																		
-																				comboSemestre_1.setModel(
-																						new DefaultComboBoxModel(
-																								new String[] {
-																										"2026-1",
-																										"2026-2"
-																								}));
+		comboSemestre_1.setModel(
+			new DefaultComboBoxModel(
+				new String[] {
+					"2026-1",
+					"2026-2"
+					}));
 																				
-																						comboSemestre_1.setBounds(115, 215, 100, 40);
-																						panelNotaseFalta.add(comboSemestre_1);
+		comboSemestre_1.setBounds(115, 215, 100, 40);
+		panelNotaseFalta.add(comboSemestre_1);
 																						
 																								
-																								JLabel lblNota = new JLabel("Nota:");
-																								lblNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																								lblNota.setBounds(267, 215, 60, 40);
-																								panelNotaseFalta.add(lblNota);
+		JLabel lblNota = new JLabel("Nota:");
+		lblNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblNota.setBounds(267, 215, 60, 40);
+		panelNotaseFalta.add(lblNota);
 																										
-																												JLabel lblFaltas = new JLabel("Faltas:");
-																												lblFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																												lblFaltas.setBounds(478, 215, 70, 40);
-																												panelNotaseFalta.add(lblFaltas);
-																												
-																														txtFaltas = new JTextField();
-																														txtFaltas.setHorizontalAlignment(SwingConstants.CENTER);
-																														txtFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																														txtFaltas.setText("2");
-																														txtFaltas.setBounds(558, 215, 60, 40);
-																														panelNotaseFalta.add(txtFaltas);
-																														
-																																
-																																btnNovo.setBounds(10, 280, 70, 60);
-																																panelNotaseFalta.add(btnNovo);
-																																
-																																		
-																																		btnGravar.setBounds(140, 280, 70, 60);
-																																		panelNotaseFalta.add(btnGravar);
-																																		
-																																				JButton btnPesquisar1 = new JButton("");
-																																				btnPesquisar1.setBounds(279, 280, 70, 60);
-																																				panelNotaseFalta.add(btnPesquisar1);
-																																				
-																																						JButton btnJava1 = new JButton("");
-																																						btnJava1.addActionListener(new ActionListener() {
-																																							public void actionPerformed(ActionEvent e) {
-																																							}
-																																						});
-																																						btnJava1.setBounds(414, 280, 70, 60);
-																																						panelNotaseFalta.add(btnJava1);
-																																						
-																																								JButton btnSair2_1 = new JButton("");
-																																								btnSair2_1.setBounds(548, 280, 70, 60);
-																																								panelNotaseFalta.add(btnSair2_1);
-																																								
-																																								txtCurso2 = new JTextField();
-																																								txtCurso2.setEditable(false);
-																																								txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtCurso2.setBounds(10, 80, 608, 40);
-																																								panelNotaseFalta.add(txtCurso2);
-																																								
-																																								txtNome2 = new JTextField();
-																																								txtNome2.setEditable(false);
-																																								txtNome2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtNome2.setBounds(288, 15, 330, 40);
-																																								panelNotaseFalta.add(txtNome2);
-																																								
-																																								txtNota = new JTextField();
-																																								txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtNota.setBounds(333, 215, 60, 40);
-																																								panelNotaseFalta.add(txtNota);
+		JLabel lblFaltas = new JLabel("Faltas:");
+		lblFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblFaltas.setBounds(478, 215, 70, 40);
+		panelNotaseFalta.add(lblFaltas);
+		
+		txtFaltas = new JTextField();
+		txtFaltas.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtFaltas.setText("2");
+		txtFaltas.setBounds(558, 215, 60, 40);
+		panelNotaseFalta.add(txtFaltas);
+		btnNovo.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				AlunoDAO alunoDao = new AlunoDAO();
+				Aluno a = alunoDao.buscarAluno(Integer.parseInt(txtRgm2.getText()));
+				CursoDAO cursoDao = new CursoDAO();
+				//Curso c = cursoDao.buscarCurso();
+			} catch (Exception exception) {
+				System.out.println("ERRO: " + exception.getMessage());
+			}
+			//DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+			//Disciplina disciplina = new Disciplina();
+			//disciplina.setCodigo(0);
+		//	disciplinaDao.inserirDisciplina(null);
+		
+		}
+		});
+		
+		
+		btnNovo.setBounds(10, 280, 70, 60);
+		panelNotaseFalta.add(btnNovo);
+		
+		
+		btnGravar.setBounds(140, 280, 70, 60);
+		panelNotaseFalta.add(btnGravar);
+		
+																																			JButton btnPesquisar1 = new JButton("");
+		btnPesquisar1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+																																				}
+		});
+		btnPesquisar1.setBounds(279, 280, 70, 60);
+		panelNotaseFalta.add(btnPesquisar1);
+		
+		JButton btnJava1 = new JButton("");
+		btnJava1.addActionListener(new ActionListener() {
+																																						public void actionPerformed(ActionEvent e) {
+		}
+		});
+		btnJava1.setBounds(414, 280, 70, 60);
+																																					panelNotaseFalta.add(btnJava1);
+																																					
+		JButton btnSair2_1 = new JButton("");
+																																							btnSair2_1.setBounds(548, 280, 70, 60);
+		panelNotaseFalta.add(btnSair2_1);
+		txtCurso2 = new JTextField();
+		txtCurso2.setEditable(false);
+		txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtCurso2.setBounds(10, 80, 608, 40);
+		panelNotaseFalta.add(txtCurso2);
+		
+		txtNome2 = new JTextField();
+		txtNome2.setEditable(false);
+		txtNome2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtNome2.setBounds(288, 15, 330, 40);
+		panelNotaseFalta.add(txtNome2);
+		
+		txtNota = new JTextField();
+		txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtNota.setBounds(333, 215, 60, 40);
+		panelNotaseFalta.add(txtNota);
 		
 		JPanel panelBoletim = new JPanel();
 		panelBoletim.setLayout(null);
@@ -533,4 +615,4 @@ public class UIPrincipal extends JFrame {
 		panelBoletim.add(lblCurso);
 
 	}
-}
+	}
