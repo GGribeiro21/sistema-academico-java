@@ -61,7 +61,15 @@ public class UIPrincipal extends JFrame {
 	private JComboBox comboDisciplin;
 	private JComboBox comboSemestre;
 	private JComboBox comboNota;
-
+	private String[] ufs = {
+		    "AC", "AL", "AP", "AM", "BA", "CE", "DF",
+		    "ES", "GO", "MA", "MT", "MS", "MG", "PA",
+		    "PB", "PR", "PE", "PI", "RJ", "RN", "RS",
+		    "RO", "RR", "SC", "SP", "SE", "TO"
+		};
+	private JComboBox<String> comboBoxUf = new JComboBox<>(ufs);
+	private JFormattedTextField txtCpf = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+	
 	private JButton btnAtualizar2 = new JButton("");
 	private JButton btnGravar = new JButton("");
 	private JButton btnPesquisar;
@@ -116,7 +124,29 @@ public class UIPrincipal extends JFrame {
 		mntmSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					alunoDAO.inserirAluno(new Aluno());
+					Aluno aluno = new Aluno();
+
+					aluno.setRgm(Integer.parseInt(txtRgm.getText()));
+					aluno.setNome(txtNome.getText());
+					aluno.setEmail(txtEmail.getText());
+					aluno.setCpf(txtCpf.getText());
+					aluno.setEndereco(txtEnd.getText());
+					aluno.setMunicipio(txtMunicipio.getText());
+					aluno.setUf(comboBoxUf.getSelectedItem().toString());
+					aluno.setCelular(txtCelular.getText());
+
+					// Data
+					String[] data = txtData.getText().trim().split("/");
+
+					int dia = Integer.parseInt(data[0]);
+					int mes = Integer.parseInt(data[1]);
+					int ano = Integer.parseInt(data[2]);
+
+					aluno.setDataNascimento(dia, mes, ano);
+
+					alunoDAO.inserirAluno(aluno);
+
+					JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso!");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -135,7 +165,19 @@ public class UIPrincipal extends JFrame {
 		mntmConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					alunoDAO.buscarAluno(new Aluno());
+					int rgm = Integer.parseInt(txtRgm.getText());
+
+					Aluno aluno = alunoDAO.buscarAluno(rgm);
+
+					txtNome.setText(aluno.getNome());
+					txtEmail.setText(aluno.getEmail());
+					txtEnd.setText(aluno.getEndereco());
+					txtCpf.setText(aluno.getCpf());
+					txtData.setText(aluno.getDataNascimentoFormatada());
+					txtMunicipio.setText(aluno.getMunicipio());
+					txtCelular.setText(aluno.getCelular());
+
+					JOptionPane.showMessageDialog(null, "Aluno encontrado!");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -159,7 +201,14 @@ public class UIPrincipal extends JFrame {
 		mntmDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					alunoDAO.deletarAluno(new Aluno());
+
+					Aluno aluno = new Aluno();
+
+					aluno.setRgm(Integer.parseInt(txtRgm.getText()));
+
+					alunoDAO.deletarAluno(aluno);
+
+					JOptionPane.showMessageDialog(null, "Aluno deletado com sucesso!");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -225,7 +274,7 @@ public class UIPrincipal extends JFrame {
 		
 		txtNome = new JTextField();
 		txtNome.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtNome.setBounds(276, 15, 358, 40);
+		txtNome.setBounds(276, 15, 404, 40);
 		panelDadosP.add(txtNome);
 		txtNome.setColumns(10);
 		
@@ -236,18 +285,18 @@ public class UIPrincipal extends JFrame {
 		
 		JLabel lblCpf = new JLabel("CPF:");
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblCpf.setBounds(370, 80, 60, 40);
+		lblCpf.setBounds(383, 80, 52, 40);
 		panelDadosP.add(lblCpf);
 		
 		txtData = new JFormattedTextField(new MaskFormatter(" ##/##/####"));
 		txtData.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtData.setBounds(240, 80, 98, 40);
+		txtData.setBounds(240, 80, 133, 40);
 		panelDadosP.add(txtData);
 		
-		JFormattedTextField txtCpf = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+		
 		txtCpf.setText("   .   -  ");
 		txtCpf.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtCpf.setBounds(440, 80, 194, 40);
+		txtCpf.setBounds(440, 80, 240, 40);
 		panelDadosP.add(txtCpf);
 		
 		JLabel lblRgm = new JLabel("RGM:");
@@ -269,7 +318,7 @@ public class UIPrincipal extends JFrame {
 		txtEmail = new JTextField();
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(95, 150, 539, 40);
+		txtEmail.setBounds(95, 150, 585, 40);
 		panelDadosP.add(txtEmail);
 		
 		JLabel lblEnd = new JLabel("Endereço:");
@@ -280,7 +329,7 @@ public class UIPrincipal extends JFrame {
 		txtEnd = new JTextField();
 		txtEnd.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtEnd.setColumns(10);
-		txtEnd.setBounds(130, 220, 504, 40);
+		txtEnd.setBounds(122, 220, 558, 40);
 		panelDadosP.add(txtEnd);
 		
 		JLabel lblMunicipio = new JLabel("Municipio:");
@@ -291,36 +340,28 @@ public class UIPrincipal extends JFrame {
 		txtMunicipio = new JTextField();
 		txtMunicipio.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtMunicipio.setColumns(10);
-		txtMunicipio.setBounds(120, 290, 115, 40);
+		txtMunicipio.setBounds(120, 290, 159, 40);
 		panelDadosP.add(txtMunicipio);
 		
 		JLabel lblUf = new JLabel("UF:");
 		lblUf.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblUf.setBounds(261, 290, 46, 40);
+		lblUf.setBounds(289, 290, 46, 40);
 		panelDadosP.add(lblUf);
-		
-		String[] ufs = {
-			    "AC", "AL", "AP", "AM", "BA", "CE", "DF",
-			    "ES", "GO", "MA", "MT", "MS", "MG", "PA",
-			    "PB", "PR", "PE", "PI", "RJ", "RN", "RS",
-			    "RO", "RR", "SC", "SP", "SE", "TO"
-			};
 
-			JComboBox<String> comboBoxUf = new JComboBox<>(ufs);
 			comboBoxUf.setFont(new Font("Tahoma", Font.PLAIN, 23));
-			comboBoxUf.setBounds(313, 290, 80, 40);
+			comboBoxUf.setBounds(345, 290, 80, 40);
 
 			panelDadosP.add(comboBoxUf);
 		
 		JLabel lblCelular = new JLabel("Celular:");
 		lblCelular.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblCelular.setBounds(410, 290, 80, 40);
+		lblCelular.setBounds(435, 290, 80, 40);
 		panelDadosP.add(lblCelular);
 		
 		txtCelular = new JTextField();
 		txtCelular.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtCelular.setColumns(10);
-		txtCelular.setBounds(500, 290, 134, 40);
+		txtCelular.setBounds(525, 290, 155, 40);
 		panelDadosP.add(txtCelular);
 		
 		JPanel panelDadosC = new JPanel();
@@ -536,6 +577,12 @@ public class UIPrincipal extends JFrame {
 		lblDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		lblDisciplina.setBounds(12, 146, 121, 40);
 		panelNotaseFalta.add(lblDisciplina);
+		
+		txtCurso2 = new JTextField();
+		txtCurso2.setEditable(false);
+		txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtCurso2.setBounds(10, 80, 608, 40);
+		panelNotaseFalta.add(txtCurso2);
 								
 		JComboBox<String> comboDisciplina = new JComboBox<>();
 		comboDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
@@ -574,7 +621,7 @@ public class UIPrincipal extends JFrame {
 		        "Marketing Internacional"
 		    }
 		};
-	
+		carregarDisciplinas(comboDisciplina, txtCurso2, disciplinas);
 		comboDisciplina.setModel(
 	    new DefaultComboBoxModel<>(disciplinas[0])
 		);
@@ -638,11 +685,7 @@ public class UIPrincipal extends JFrame {
 	btnSair1.setBounds(548, 280, 70, 60);
 	panelNotaseFalta.add(btnSair1);
 																																								
-	txtCurso2 = new JTextField();
-	txtCurso2.setEditable(false);
-	txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-	txtCurso2.setBounds(10, 80, 608, 40);
-	panelNotaseFalta.add(txtCurso2);
+	
 																																								
 	txtNome2 = new JTextField();
 	txtNome2.setEditable(false);
@@ -736,4 +779,29 @@ public class UIPrincipal extends JFrame {
 		panelBoletim.add(comboDisciplina2);
 
 	}
+	private void carregarDisciplinas(JComboBox<String> comboDisciplina,
+            JTextField txtCurso2,
+            String[][] disciplinas) {
+
+String curso = txtCurso2.getText();
+
+if (curso.equals("Análise e Desenvolvimento de Sistemas")) {
+
+comboDisciplina.setModel(
+new DefaultComboBoxModel<>(disciplinas[0])
+);
+
+} else if (curso.equals("Logística")) {
+
+comboDisciplina.setModel(
+new DefaultComboBoxModel<>(disciplinas[1])
+);
+
+} else if (curso.equals("Comercio Exterior")) {
+
+comboDisciplina.setModel(
+new DefaultComboBoxModel<>(disciplinas[2])
+);
+}
+}
 	}
