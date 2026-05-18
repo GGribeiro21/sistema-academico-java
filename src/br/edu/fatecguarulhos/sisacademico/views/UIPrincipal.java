@@ -106,7 +106,8 @@ public class UIPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int selected = tabbedPane.getSelectedIndex();
 				if(selected == 0) {
-					System.out.println("tela pessoal");					
+					System.out.println("tela pessoal");
+					
 				}
 				if(selected == 1)
 					System.out.println("tela2 curso");
@@ -328,7 +329,52 @@ public class UIPrincipal extends JFrame {
 		panelDadosC.add(btnNovo2);
 		btnNovo2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
 		
-		JComboBox comboBoxCampus = new JComboBox();
+		String[] campus = {
+	            "Adamantina","Americana",
+	            "Araçatuba","Araraquara",
+	            "Araras","Assis",
+	            "Atibaia","Barretos",
+	            "Barueri","Bauru",
+	            "Bebedouro","Botucatu",
+	            "Bragança Paulista","Campinas",
+	            "Capão Bonito","Carapicuíba",
+	            "Catanduva","Cotia",
+	            "Cruzeiro","Diadema",
+	            "Ferraz de Vasconcelos","Franca",
+	            "Franco da Rocha","Garça",
+	            "Guaratinguetá","Guarulhos",
+	            "Ilha Solteira","Indaiatuba",
+	            "Itapetininga","Itapevi",
+	            "Itapira","Iaquaquecetuba",
+	            "Itatiba","Itu",
+	            "Jaboticabal","Jacareí",
+	            "Jales","Jaú",
+	            "Jundiaí","Lins",
+	            "Marília","Matão",
+	            "Mauá","Mococa",
+	            "Mogi das Cruzes","Mogi Mirim",
+	            "Olímpia","Osasco",
+	            "Ourinhos","Pindamonhangaba",
+	            "Piracicaba","Pompéia",
+	            "Porto Ferreira","Praia Grande",
+	            "Presidente Prudente","Registro",
+	            "Ribeirão Preto","Rio Claro",
+	            "Santana de Parnaíba","Santo André",
+	            "Santos (Baixada Santista)","Santos (Rubens Lara)",
+	            "São Bernardo do Campo","São Caetano do Sul",
+	            "São Carlos","São José do Rio Preto",
+	            "São José dos Campos","São Paulo (Bom Retiro / São Paulo)",
+	            "São Paulo (Ipiranga)","São Paulo (Itaquera)",
+	            "São Paulo (Sebrae)","São Paulo (Tatuapé)",
+	            "São Paulo (Zona Leste)","São Paulo (Zona Sul)",
+	            "São Roque","São Sebastião",
+	            "Sertãozinho","Sorocaba",
+	            "Sumaré","Suzano",
+	            "Taquaritinga","Tatuí",
+	            "Taubaté","Votorantim"
+	        };
+		
+		JComboBox comboBoxCampus = new JComboBox(campus);
 		comboBoxCampus.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		comboBoxCampus.setBounds(114, 80, 526, 40);
 		panelDadosC.add(comboBoxCampus);
