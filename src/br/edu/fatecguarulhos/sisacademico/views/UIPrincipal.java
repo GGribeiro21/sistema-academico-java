@@ -72,9 +72,12 @@ public class UIPrincipal extends JFrame {
 	
 	private JButton btnAtualizar2 = new JButton("");
 	private JButton btnGravar = new JButton("");
+
+	private JButton btnSair2 = new JButton("");
+	private JButton btnSalvar2 = new JButton("");
 	private JButton btnPesquisar;
 	private JButton btnJava;
-	private JButton btnSair2;
+	
 
 	private JLabel lblNomeAluno;
 	private JLabel lblCursoAluno;
@@ -86,6 +89,8 @@ public class UIPrincipal extends JFrame {
 	private CursoDAO cursoDAO = new CursoDAO();
 	private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 	private JTextField txtRgmCurso;
+	private JButton btnAtualizar2;
+	
 
 	
 	private JTabbedPane tabbedPane ;
@@ -433,6 +438,8 @@ public class UIPrincipal extends JFrame {
 		
 		JButton btnAtualizar = new JButton("");
 		btnAtualizar.addActionListener(new ActionListener() {
+		JButton btnSalvar = new JButton("");
+		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					cursoDAO.atualizarCurso(new Curso());
@@ -444,6 +451,9 @@ public class UIPrincipal extends JFrame {
 		btnAtualizar.setBounds(10, 277, 77, 66);
 		panelDadosC.add(btnAtualizar);
 		btnAtualizar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
+		btnSalvar.setBounds(563, 222, 77, 66);
+		panelDadosC.add(btnSalvar);
+		btnSalvar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
 		
 		String[] campus = {
 	            "Adamantina","Americana",
@@ -495,8 +505,8 @@ public class UIPrincipal extends JFrame {
 		comboBoxCampus.setBounds(114, 150, 526, 40);
 		panelDadosC.add(comboBoxCampus);
 		
-		JButton btnSalvar = new JButton("");
-		btnSalvar.addActionListener(new ActionListener() {
+		JButton btnBuscar = new JButton("");
+		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					cursoDAO.inserirCurso(new Curso());
@@ -536,6 +546,19 @@ public class UIPrincipal extends JFrame {
 		btnDeletar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
 		btnDeletar.setBounds(414, 277, 77, 66);
 		panelDadosC.add(btnDeletar);
+		btnBuscar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
+		btnBuscar.setBounds(143, 222, 77, 66);
+		panelDadosC.add(btnBuscar);
+		
+		JButton btnDeletar = new JButton("");
+		btnDeletar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/apagar.png")));
+		btnDeletar.setBounds(280, 222, 77, 66);
+		panelDadosC.add(btnDeletar);
+		
+		JButton btnAtualizar = new JButton("");
+		btnAtualizar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
+		btnAtualizar.setBounds(414, 222, 77, 66);
+		panelDadosC.add(btnAtualizar);
 		
 		JButton btnSair = new JButton("");
 		btnSair.addActionListener(new ActionListener() {
@@ -546,6 +569,10 @@ public class UIPrincipal extends JFrame {
 		});
 		btnSair.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
 		btnSair.setBounds(563, 277, 77, 66);
+			}
+		});
+		btnSair.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/sair.png")));
+		btnSair.setBounds(10, 222, 77, 66);
 		panelDadosC.add(btnSair);
 		
 		JLabel lblRgmAluno = new JLabel("RGM Aluno:");
@@ -697,6 +724,62 @@ public class UIPrincipal extends JFrame {
 	txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
 	txtNota.setBounds(333, 215, 60, 40);
 	panelNotaseFalta.add(txtNota);
+																												JLabel lblFaltas = new JLabel("Faltas:");
+																												lblFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
+																												lblFaltas.setBounds(478, 215, 70, 40);
+																												panelNotaseFalta.add(lblFaltas);
+																												
+																														txtFaltas = new JTextField();
+																														txtFaltas.setHorizontalAlignment(SwingConstants.CENTER);
+																														txtFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
+																														txtFaltas.setText("2");
+																														txtFaltas.setBounds(558, 215, 60, 40);
+																														panelNotaseFalta.add(txtFaltas);
+																																btnSair2.addActionListener(new ActionListener() {
+																																	public void actionPerformed(ActionEvent e) {
+																																	}
+																																});
+																														
+																																
+																																btnSair2.setBounds(10, 280, 80, 76);
+																																panelNotaseFalta.add(btnSair2);
+																																
+																																		
+																																		btnSalvar2.setBounds(548, 280, 80, 76);
+																																		panelNotaseFalta.add(btnSalvar2);
+																																		
+																																				JButton btnDeletar2 = new JButton("");
+																																				btnDeletar2.setBounds(279, 280, 80, 76);
+																																				panelNotaseFalta.add(btnDeletar2);
+																																				
+																																						btnAtualizar2 = new JButton("");
+																																						btnAtualizar2.addActionListener(new ActionListener() {
+																																							public void actionPerformed(ActionEvent e) {
+																																							}
+																																						});
+																																						btnAtualizar2.setBounds(414, 280, 80, 76);
+																																						panelNotaseFalta.add(btnAtualizar2);
+																																								
+																																								txtCurso2 = new JTextField();
+																																								txtCurso2.setEditable(false);
+																																								txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+																																								txtCurso2.setBounds(10, 80, 608, 40);
+																																								panelNotaseFalta.add(txtCurso2);
+																																								
+																																								txtNome2 = new JTextField();
+																																								txtNome2.setEditable(false);
+																																								txtNome2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+																																								txtNome2.setBounds(288, 15, 330, 40);
+																																								panelNotaseFalta.add(txtNome2);
+																																								
+																																								txtNota = new JTextField();
+																																								txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
+																																								txtNota.setBounds(333, 215, 60, 40);
+																																								panelNotaseFalta.add(txtNota);
+																																								
+																																								JButton btnBuscar2 = new JButton("");
+																																								btnBuscar2.setBounds(145, 280, 80, 76);
+																																								panelNotaseFalta.add(btnBuscar2);
 		
 		JPanel panelBoletim = new JPanel();
 		panelBoletim.setLayout(null);
@@ -777,6 +860,18 @@ public class UIPrincipal extends JFrame {
 		comboDisciplina2.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		comboDisciplina2.setBounds(121, 153, 568, 40);
 		panelBoletim.add(comboDisciplina2);
+		//Icones dos Botões
+		btnSalvar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/save.png")));
+		btnDeletar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/apagar.png")));
+		btnBuscar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/buscar.png")));
+		btnAtualizar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/atualizar.png")));
+		btnSair.setIcon(new ImageIcon(UIPrincipal.class.getResource("/sair.png")));
+		
+		btnSalvar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/save.png")));
+		btnDeletar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/apagar.png")));
+		btnBuscar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/buscar.png")));
+		btnAtualizar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/atualizar.png")));
+		btnSair2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/sair.png")));
 
 	}
 	private void carregarDisciplinas(JComboBox<String> comboDisciplina,
