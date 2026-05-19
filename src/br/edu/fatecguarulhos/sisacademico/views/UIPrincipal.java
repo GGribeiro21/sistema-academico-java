@@ -1204,8 +1204,9 @@ public class UIPrincipal extends JFrame {
 
 					aluno.setRgm(Integer.parseInt(txtRgm.getText()));
 
+					disciplinaDAO.deleteCascade(aluno.getRgm());
+					cursoDAO.deletarCascade(aluno.getRgm());
 					alunoDAO.deletarAluno(aluno);
-
 					JOptionPane.showMessageDialog(null, "Aluno deletado com sucesso!");
 				} 
 				catch(NumberFormatException nfe) {
