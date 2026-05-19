@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.time.DateTimeException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -583,7 +585,11 @@ public class UIPrincipal extends JFrame {
                         rbVespertino.setSelected(true);
                     	rbNoturno.setSelected(false);
                     	rbMatutino.setSelected(false);
-                } catch (Exception e1) {
+                }
+				catch (NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Insira um número inteiro");
+				}
+				catch (Exception e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -591,7 +597,7 @@ public class UIPrincipal extends JFrame {
 			}
 		});
 		btnBuscar.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\buscar.png")
+				new ImageIcon(UIPrincipal.class.getResource("/buscar.png"))
 			);
 		btnBuscar.setBounds(27, 280, 90, 80);
 		panelCurso.add(btnBuscar);
@@ -623,13 +629,17 @@ public class UIPrincipal extends JFrame {
                     alunoDao.atualizarAluno(a);
                     cursoDao.inserirCurso(c);
                     System.out.println(c.getNome());
-                } catch (Exception excp){
+                } 
+				catch(SQLException sql) {
+					
+				}
+				catch (Exception excp){
                     System.out.println("Erro -> " + excp.getMessage());
 					JOptionPane.showMessageDialog(null, excp.getMessage());
                 }
 			}
 		});
-		btnSalvar.setIcon(new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\save.png"));
+		btnSalvar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/save.png")));
 		btnSalvar.setBounds(170, 280, 90, 80);
 		panelCurso.add(btnSalvar);
 
@@ -662,7 +672,7 @@ public class UIPrincipal extends JFrame {
 			}
 		});
 		btnAtualizar.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\atualizar.png")
+				new ImageIcon(UIPrincipal.class.getResource("/atualizar.png"))
 			);
 		btnAtualizar.setBounds(335, 280, 90, 80);
 		panelCurso.add(btnAtualizar);
@@ -686,15 +696,15 @@ public class UIPrincipal extends JFrame {
 			}
 		});
 		btnExcluir.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\apagar.png")
+				new ImageIcon(UIPrincipal.class.getResource("/apagar.png"))
 			);
 		btnExcluir.setBounds(482, 280, 90, 80);
 		panelCurso.add(btnExcluir);
 		
 		JButton btnSair = new JButton("");
 		btnSair.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\sair.png")
-			);
+								new ImageIcon(UIPrincipal.class.getResource("/sair.png"))
+							);
 		btnSair.setBounds(616, 280, 90, 80);
 
 		btnSair.addActionListener(new ActionListener() {
@@ -834,7 +844,7 @@ public class UIPrincipal extends JFrame {
 							ex.printStackTrace();
 
 							JOptionPane.showMessageDialog(null,
-									"Erro ao buscar dados!");
+									ex.getMessage());
 
 						}
 					}
@@ -843,7 +853,7 @@ public class UIPrincipal extends JFrame {
 //			}
 //		});
 		btnBuscar2.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\buscar.png")
+				new ImageIcon(UIPrincipal.class.getResource("/buscar.png"))
 			);
 		btnBuscar2.setBounds(27, 280, 90, 80);
 		panelNotas.add(btnBuscar2);
@@ -874,18 +884,22 @@ public class UIPrincipal extends JFrame {
 			            JOptionPane.showMessageDialog(null,
 			                    "Disciplina salva com sucesso!");
 
-			        } catch (Exception e1) {
+			        } 
+			        catch(NumberFormatException nfe) {
+			        	JOptionPane.showMessageDialog(null, "Valor digitado não é um número inteiro");
+			        }
+			        catch (Exception e1) {
 
 			            e1.printStackTrace();
 
 			            JOptionPane.showMessageDialog(null,
-			                    "Erro ao salvar disciplina!");
+			                    e1.getMessage());
 			        }
 			    }
 			});
 		
 		btnSalvar2.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\save.png")
+				new ImageIcon(UIPrincipal.class.getResource("/save.png"))
 			);
 		btnSalvar2.setBounds(180, 280, 90, 80);
 		panelNotas.add(btnSalvar2);
@@ -912,7 +926,7 @@ public class UIPrincipal extends JFrame {
 				}
 			}});
 		btnAtualizar2.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\atualizar.png")
+				new ImageIcon(UIPrincipal.class.getResource("/atualizar.png"))
 			);
 		btnAtualizar2.setBounds(340, 280, 90, 80);
 		panelNotas.add(btnAtualizar2);
@@ -944,14 +958,14 @@ public class UIPrincipal extends JFrame {
 				
 			}});
 		btnExcluir2.setIcon( 
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\apagar.png")
+				new ImageIcon(UIPrincipal.class.getResource("/apagar.png"))
 				);
 		btnExcluir2.setBounds(495, 280, 90, 80);
 		panelNotas.add(btnExcluir2);
 		
 		JButton btnSair2 = new JButton("");
 		btnSair2.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\sair.png")
+				new ImageIcon(UIPrincipal.class.getResource("/sair.png"))
 			);
 		btnSair2.setBounds(650, 280, 90, 80);
 
@@ -1117,9 +1131,13 @@ public class UIPrincipal extends JFrame {
 
 					JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso!");
 
-				} catch (Exception ex) {
+				} 
+				catch(NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Insira um número inteiro");
+				}
+				catch (Exception ex) {
 					ex.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Erro ao salvar aluno.");
+					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
 			}
 		});
@@ -1153,9 +1171,13 @@ public class UIPrincipal extends JFrame {
 						txtData.setText("");
 					}
 
-				} catch (Exception ex) {
+				} 
+				catch(NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Digite um número inteiro");
+				}
+				catch (Exception ex) {
 					ex.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Erro ao consultar aluno.");
+					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
 			}
 		});
@@ -1171,8 +1193,13 @@ public class UIPrincipal extends JFrame {
 					alunoDAO.deletarAluno(aluno);
 
 					JOptionPane.showMessageDialog(null, "Aluno deletado com sucesso!");
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				} 
+				catch(NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Digite um número inteiro");
+				}
+				catch (Exception e1) {
+					JOptionPane.showMessageDialog(null,
+		                    e1.getMessage());
 				}
 			}
 		});
@@ -1212,7 +1239,7 @@ public class UIPrincipal extends JFrame {
 		            e1.printStackTrace();
 
 		            JOptionPane.showMessageDialog(null,
-		                    "Erro ao atualizar aluno!");
+		                    e1.getMessage());
 		        }
 		    }
 		});
