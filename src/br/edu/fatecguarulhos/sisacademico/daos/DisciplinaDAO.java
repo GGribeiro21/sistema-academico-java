@@ -54,16 +54,18 @@ public class DisciplinaDAO {
 	public int inserirDisciplina(Disciplina disciplina) throws Exception {
 		disciplina.validarDados();
 		String sql = "INSERT INTO disciplina "
-				+ "(codigo, nome, faltas, nota, semestre) "
-				+ "VALUES (?,?,?,?,?)";
+				+ "(codigo, rgm_aluno,codigo_curso, nome, faltas, nota, semestre) "
+				+ "VALUES (?,?,?,?,?,?,?)";
 		try{
 			Connection connection = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql);
 			pstmt.setInt(1, disciplina.getCodigo());
-			pstmt.setString(2, disciplina.getNome());
-			pstmt.setInt(3, disciplina.getFaltas());
-			pstmt.setFloat(4, disciplina.getNota());
-			pstmt.setString(5, disciplina.getSemestre());
+			pstmt.setInt(2, disciplina.getAluno().getRgm());
+			pstmt.setInt(3, disciplina.getCurso().getCodigo());
+			pstmt.setString(4, disciplina.getNome());
+			pstmt.setInt(5, disciplina.getFaltas());
+			pstmt.setFloat(6, disciplina.getNota());
+			pstmt.setString(7, disciplina.getSemestre());
 			int valoresInseridos = pstmt.executeUpdate();
 			connection.close();
 			return valoresInseridos;

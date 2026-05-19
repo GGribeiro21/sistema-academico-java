@@ -868,7 +868,10 @@ public class UIPrincipal extends JFrame {
 			            disciplina.setNota(Float.parseFloat(txtNota.getText().toString()));
 			            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText().toString()));
 			            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
-
+			            disciplina.setAluno(aluno);
+			            Curso c = new Curso();
+			            c.setCodigo(idCurso);
+			            disciplina.setCurso(c);
 			            disciplinaDAO.inserirDisciplina(disciplina);
 
 			            JOptionPane.showMessageDialog(null,
