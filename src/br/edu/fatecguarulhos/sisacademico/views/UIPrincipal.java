@@ -1054,7 +1054,8 @@ public class UIPrincipal extends JFrame {
 		
 		
 		
-		JButton btnBltBuscar = new JButton("Buscar Rgm");
+		JButton btnBltBuscar = new JButton("");
+		btnBltBuscar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/buscar.png")));
 		
 		btnBltBuscar.setBounds(309, 5, 90, 80);
 		panelBoletim.add(btnBltBuscar);

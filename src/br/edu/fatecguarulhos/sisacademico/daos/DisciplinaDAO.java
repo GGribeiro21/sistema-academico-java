@@ -177,7 +177,8 @@ public class DisciplinaDAO {
                 + "WHERE rgm_aluno = ?";
 
         try {
-
+        	AlunoDAO alunoDao = new AlunoDAO();
+        	alunoDao.buscarAluno(rgm);
             Connection connection = ConnectionFactory.getConnection();
 
             PreparedStatement pstmt = connection.prepareStatement(query);
@@ -204,7 +205,7 @@ public class DisciplinaDAO {
             connection.close();
 
             if(lista.isEmpty()) {
-                throw new Exception("RGM não encontrado");
+                throw new Exception("Nenhuma disciplina cadastrada");
             }
 
             return lista;
