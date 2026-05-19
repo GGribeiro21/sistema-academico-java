@@ -73,6 +73,8 @@ public class Disciplina {
 	}
 	
 	public void setFaltas(int faltas) {
+		if(faltas < 0) throw new RuntimeException("Faltas não podem ser negativas");
+		
 		this.faltas = faltas;
 	}
 	
@@ -97,6 +99,8 @@ public class Disciplina {
 	}
 	
 	public void setNota(float nota) {
+		if(nota <0) throw new RuntimeException("Nota não pode ser negativa");
+		if(nota > 10) throw new RuntimeException("Notas não podem ser maiores que 10");
 		this.nota = nota;
 	}
 

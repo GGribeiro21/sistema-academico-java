@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.time.DateTimeException;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -561,6 +562,7 @@ public class UIPrincipal extends JFrame {
 		panelCurso.add(rbNoturno);
 
 		ButtonGroup grupoPeriodo = new ButtonGroup();
+		
 		grupoPeriodo.add(rbMatutino);
 		grupoPeriodo.add(rbVespertino);
 		grupoPeriodo.add(rbNoturno);
@@ -575,15 +577,16 @@ public class UIPrincipal extends JFrame {
                     Curso c = cursoDao.buscarCurso(Integer.parseInt(txtRgmCurso.getText().toString()));
                     comboCurso.setSelectedItem(c.getNome());
                     comboCampus.setSelectedItem(c.getCampus());
-                    String periodo = c.getCampus();
+                    String periodo = c.getTurno();
+                   
                     if(periodo.equals("noturno"))
                         rbNoturno.setSelected(true);
                     	rbMatutino.setSelected(false);
                     	rbVespertino.setSelected(false);
                     if(periodo.equals("matutino"))
-                        rbMatutino.setSelected(true);
-                    	rbVespertino.setSelected(false);
-                    	rbNoturno.setSelected(false);
+                    	  rbNoturno.setSelected(false);
+                	rbMatutino.setSelected(true);
+                	rbVespertino.setSelected(false);
                     if(periodo.equals("vespertino"))
                         rbVespertino.setSelected(true);
                     	rbNoturno.setSelected(false);
@@ -886,7 +889,7 @@ public class UIPrincipal extends JFrame {
 			            disciplina.setCodigo(Integer.valueOf(gerarCodigoDisciplina()));
 			            disciplina.setNome(comboDisciplina.getSelectedItem().toString());
 			            disciplina.setNota(Float.parseFloat(txtNota.getText().toString()));
-			            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText().toString()));
+			            disciplina.setFaltas(Integer.parseUnsignedInt(txtFaltas.getText().toString()));
 			            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
 			            disciplina.setAluno(aluno);
 			            Curso c = new Curso();

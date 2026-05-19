@@ -47,6 +47,7 @@ public class Aluno {
 	}
 
 	public void setRgm(int rgm) {
+		if(rgm < 0) throw new RuntimeException("RGM não pode ser negativo");
 		this.rgm = rgm;
 	}
 
