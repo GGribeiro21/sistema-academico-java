@@ -886,6 +886,26 @@ public class UIPrincipal extends JFrame {
 		panelNotas.add(btnSalvar2);
 
 		JButton btnAtualizar2 = new JButton("");
+		btnAtualizar2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+		            Disciplina disciplina = new Disciplina();
+
+		            disciplina.setCodigo(Integer.valueOf(gerarCodigoDisciplina()));
+		            disciplina.setNome(comboDisciplina.getSelectedItem().toString());
+		            disciplina.setNota(Float.parseFloat(txtNota.getText().toString()));
+		            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText().toString()));
+		            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
+
+		            disciplinaDAO.atualizarDisciplina(disciplina);
+		            
+		        } catch (Exception eUpdate) {
+					System.out.println(eUpdate.getMessage());
+				}
+			}});
 		btnAtualizar2.setIcon(
 				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\atualizar.png")
 			);
@@ -893,6 +913,30 @@ public class UIPrincipal extends JFrame {
 		panelNotas.add(btnAtualizar2);
 
 		JButton btnExcluir2 = new JButton("");
+		btnExcluir2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+
+		            Disciplina disciplina = new Disciplina();
+
+		            disciplina.setCodigo(Integer.valueOf(gerarCodigoDisciplina()));
+		            disciplina.setNome(comboDisciplina.getSelectedItem().toString());
+		            disciplina.setNota(Float.parseFloat(txtNota.getText().toString()));
+		            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText().toString()));
+		            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
+
+		            disciplinaDAO.deletarDisciplina(disciplina);;
+		            
+		            txtNota.setText("");
+		            txtFaltas.setText("");
+				} catch (Exception eExc) {
+					eExc.getStackTrace();
+				}
+				
+			}});
 		btnExcluir2.setIcon( 
 				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\apagar.png")
 				);
