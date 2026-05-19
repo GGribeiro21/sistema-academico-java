@@ -91,7 +91,7 @@ public class AlunoDAO {
 	public void atualizarAluno(Aluno aluno) {
 		aluno.validarDados();
 		String sql = "UPDATE aluno SET "
-				+ "nome = ?, email = ?, cpf = ?, endereco = ?, municipio = ?, uf = ?, celular = ?, data_nasc = ?"
+				+ "nome = ?, email = ?, cpf = ?, endereco = ?, municipio = ?, uf = ?, celular = ?, data_nasc = ? "
 				+ "WHERE rgm = ?";
 		try {
 			Connection connection = ConnectionFactory.getConnection();
@@ -103,7 +103,8 @@ public class AlunoDAO {
 			pstmt.setString(5, aluno.getMunicipio());
 			pstmt.setString(6, aluno.getUf());
 			pstmt.setString(7, aluno.getCelular());
-			pstmt.setInt(8, aluno.getRgm());
+			pstmt.setString(8, aluno.getDataNascimentoFormatada());
+			pstmt.setInt(9, aluno.getRgm());
 			pstmt.execute();
 			connection.close();
 		}
