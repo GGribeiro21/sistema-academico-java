@@ -74,9 +74,11 @@ public class AlunoDAO {
 	}
 	
 	public void deletarAluno(Aluno aluno) {
+		
 		deletarNotas();
 		String sql = "DELETE FROM aluno WHERE rgm = ?";
 		try {
+			buscarAluno(aluno);
 			Connection connection = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql);
 			pstmt.setInt(1, aluno.getRgm());
@@ -84,7 +86,7 @@ public class AlunoDAO {
 			connection.close();	
 			}
 		catch(Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	private void deletarNotas() {}

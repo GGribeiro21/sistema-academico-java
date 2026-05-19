@@ -632,9 +632,8 @@ public class UIPrincipal extends JFrame {
                     alunoDao.atualizarAluno(a);
                     cursoDao.inserirCurso(c);
                     System.out.println(c.getNome());
-                } 
-				catch(SQLException sql) {
-					
+                }				catch (NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Insira um número inteiro");
 				}
 				catch (Exception excp){
                     System.out.println("Erro -> " + excp.getMessage());
@@ -667,7 +666,11 @@ public class UIPrincipal extends JFrame {
                          }
                     c.setTurno(turno);
                     cursoDao.atualizarCurso(c);
-                } catch (Exception e2) {
+                }
+				catch (NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Insira um número inteiro");
+				}
+				catch (Exception e2) {
                     System.out.println("Erro " + e2.getMessage());
 
 					JOptionPane.showMessageDialog(null, e2.getMessage());
@@ -691,7 +694,11 @@ public class UIPrincipal extends JFrame {
                     rbNoturno.setSelected(false);
                     rbMatutino.setSelected(false);
                     rbVespertino.setSelected(false);
-                } catch (Exception e1) {
+                } 
+				catch (NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Insira um número inteiro");
+				}
+				catch (Exception e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -926,9 +933,13 @@ public class UIPrincipal extends JFrame {
 
 		            disciplinaDAO.atualizarDisciplina(disciplina);
 		            
-		        } catch (Exception eUpdate) {
+		        } 
+				catch (NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Insira um número inteiro");
+				}
+				catch (Exception eUpdate) {
 					System.out.println(eUpdate.getMessage());
-					JOptionPane.showMessageDialog(null, "");
+					JOptionPane.showMessageDialog(null, eUpdate.getMessage());
 				}
 			}});
 		btnAtualizar2.setIcon(
@@ -957,7 +968,11 @@ public class UIPrincipal extends JFrame {
 		            
 		            txtNota.setText("");
 		            txtFaltas.setText("");
-				} catch (Exception eExc) {
+				} 
+				catch (NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "Insira um número inteiro");
+				}
+				catch (Exception eExc) {
 					eExc.getStackTrace();
 					JOptionPane.showMessageDialog(null, eExc.getMessage());
 				}
