@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -19,7 +20,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -870,7 +873,7 @@ public class UIPrincipal extends JFrame {
 			            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
 			            disciplina.setAluno(aluno);
 			            Curso c = new Curso();
-			            c.setCodigo(idCurso);
+			            c.setCodigo(aluno.getRgm());
 			            disciplina.setCurso(c);
 			            disciplinaDAO.inserirDisciplina(disciplina);
 
@@ -1005,7 +1008,6 @@ public class UIPrincipal extends JFrame {
 		//==========================
 		// BOLETIM
 		//==========================
-		
 		JPanel panelBoletim = new JPanel();
 		panelBoletim.setLayout(null);
 		
@@ -1020,78 +1022,71 @@ public class UIPrincipal extends JFrame {
 		txtRgmBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtRgmBoletim.setBounds(90, 20, 180, 40);
 		panelBoletim.add(txtRgmBoletim);
-								
-		JLabel lblNomeBoletim = new JLabel("Nome:");
-		lblNomeBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblNomeBoletim.setBounds(290, 20, 90, 40);
-		panelBoletim.add(lblNomeBoletim);
-										
-		JTextField txtNomeBoletim = new JTextField();
-		txtNomeBoletim.setEditable(false);
-		txtNomeBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtNomeBoletim.setBounds(380, 20, 340, 40);
-		panelBoletim.add(txtNomeBoletim);
-												
-		JLabel lblCursoBoletim = new JLabel("Curso:");
-		lblCursoBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblCursoBoletim.setBounds(10, 90, 90, 40);
-		panelBoletim.add(lblCursoBoletim);
-														
-		JTextField txtCursoBoletim = new JTextField();
-		txtCursoBoletim.setEditable(false);
-		txtCursoBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtCursoBoletim.setBounds(100, 90, 620, 40);
-		panelBoletim.add(txtCursoBoletim);
-																
-		JLabel lblDisciplinaBoletim = new JLabel("Disciplina:");
-		lblDisciplinaBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblDisciplinaBoletim.setBounds(10, 160, 120, 40);
-		panelBoletim.add(lblDisciplinaBoletim);
-																		
-		JComboBox<String> comboDisciplinaBoletim = new JComboBox<>();
-		comboDisciplinaBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		comboDisciplinaBoletim.setBounds(140, 160, 580, 40);
-		panelBoletim.add(comboDisciplinaBoletim);
-																				
-		JLabel lblSemestreBoletim = new JLabel("Semestre:");
-		lblSemestreBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblSemestreBoletim.setBounds(10, 240, 130, 40);
-		panelBoletim.add(lblSemestreBoletim);
-																						
-		JTextField txtSemestreBoletim = new JTextField();
-		txtSemestreBoletim.setEditable(false);
-		txtSemestreBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtSemestreBoletim.setBounds(150, 240, 100, 40);
-		panelBoletim.add(txtSemestreBoletim);
-																								
-		JLabel lblNotaBoletim = new JLabel("Nota:");
-		lblNotaBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblNotaBoletim.setBounds(300, 240, 80, 40);
-		panelBoletim.add(lblNotaBoletim);
-																										
-		JTextField txtNotaBoletim = new JTextField();
-		txtNotaBoletim.setEditable(false);
-		txtNotaBoletim.setHorizontalAlignment(SwingConstants.CENTER);
-		txtNotaBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtNotaBoletim.setBounds(380, 240, 80, 40);
-		panelBoletim.add(txtNotaBoletim);
-																												
-		JLabel lblFaltasBoletim = new JLabel("Faltas:");
-		lblFaltasBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblFaltasBoletim.setBounds(500, 240, 90, 40);
-		panelBoletim.add(lblFaltasBoletim);
-																														
-		JTextField txtFaltasBoletim = new JTextField();
-		txtFaltasBoletim.setEditable(false);
-		txtFaltasBoletim.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFaltasBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtFaltasBoletim.setBounds(600, 240, 80, 40);
-		panelBoletim.add(txtFaltasBoletim);
+		
+		
+		
+		JButton btnBltBuscar = new JButton("Buscar Rgm");
+		
+		btnBltBuscar.setBounds(309, 5, 90, 80);
+		panelBoletim.add(btnBltBuscar);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true); 
+
+		JScrollPane scrollPane = new JScrollPane(textArea);
+
+		scrollPane.setBounds(59, 94, 488, 241);
+
+		panelBoletim.add(scrollPane);
 		
 		// =========================
 		// EVENTOS
 		// =========================
+		btnBltBuscar.addActionListener(new ActionListener() {
 
+	        public void actionPerformed(ActionEvent e) {
+	            try {
+	                int rgm = Integer.parseInt(txtRgmBoletim.getText().toString());
+	                System.out.println("linha1");
+	                DisciplinaDAO dao = new DisciplinaDAO();
+	                System.out.println("linha 2");
+	                ArrayList<Disciplina> disciplinas = dao.BuscarRgm(rgm);
+	                String texto = "";
+
+
+	                for(Disciplina d : disciplinas) {
+
+	                    //texto += "RGM: " + d.getRgm_aluno() + "\n";
+	                	texto += "Nome: " + d.getNome() + "\n";
+	                    texto += "Código: " + d.getCodigo() + "\n";
+	                    //texto += "Código Curso: " + d.getCodigo_curso() + "\n";
+	                    texto += "Semestre: " + d.getSemestre() + "\n";
+	                    texto += "Faltas: " + d.getFaltas() + "\n";
+	                    texto += "Nota: " + d.getNota() + "\n";
+
+	                    texto += "-----------------------------\n";
+	                }
+
+	                textArea.setText(texto);
+
+
+	            } catch (NumberFormatException ex) {
+
+	                JOptionPane.showMessageDialog(null,
+	                        "RGM inválido");
+
+	            } catch (Exception ex) {
+
+	                JOptionPane.showMessageDialog(null,
+	                        ex.getMessage());
+
+	                ex.printStackTrace();
+	            }
+	        }
+
+
+	    });
 		mntmSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 

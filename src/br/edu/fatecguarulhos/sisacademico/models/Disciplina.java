@@ -8,6 +8,8 @@ public class Disciplina {
 	private int codigo,faltas;
 	private String nome,semestre;
 	private float nota;
+	private int codigo_curso;
+	private int rgm_aluno;
 	
 	
 	//Inicialização do Construtor
@@ -18,6 +20,23 @@ public class Disciplina {
 		this.semestre = semestre;
 		this.nota = nota;
 	}
+	
+	public int getCodigo_curso() {
+		return codigo_curso;
+	}
+
+	public void setCodigo_curso(int codigo_curso) {
+		this.codigo_curso = codigo_curso;
+	}
+
+	public int getRgm_aluno() {
+		return rgm_aluno;
+	}
+
+	public void setRgm_aluno(int rgm_aluno) {
+		this.rgm_aluno = rgm_aluno;
+	}
+
 	public Aluno getAluno() {
 		return aluno;
 	}
